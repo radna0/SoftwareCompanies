@@ -1,6 +1,7 @@
 import time
 from edmondsKarp import EdmondsKarp
 from pushRelabel import PushRelabel
+from shortestPath import ShortestAugmentingPath
 
 
 testcase1 = {
@@ -69,7 +70,7 @@ if False:
     print("EdmondsKarp: ", end - start)
 
 # Push-Relabel
-if True:
+if False:
     s2 = PushRelabel()
     start = time.time()
 
@@ -86,8 +87,8 @@ if True:
     print("PushRelabel: ", end - start)
 
 # Shortest Augmenting Path
-if False:
-    s2 = PushRelabel()
+if True:
+    s2 = ShortestAugmentingPath()
     start = time.time()
 
     print(s2.produceData(**testcase1) ==

@@ -1,27 +1,30 @@
+from queue import PriorityQueue
 
 
-class EdmondsKarp:
+class ShortestAugmentingPath:
     def maxFlow(self, H, src, snk, canUse, n):
         res = 0
         while True:
             path = [0] * 2 * n
             From = [-1] * 2 * n
             seen = [False] * 2 * n
-            path[src] = float("inf")
-            while True:
-                i = -1
-                for j in range(2*n):
-                    if not seen[j] and path[j] and (i == -1 or path[j] > path[i]):
-                        i = j
-                if i == -1:
-                    break
+            dist = [float('inf')] * 2 * n
+            dist[src] = 0
+            pq = PriorityQueue()
+            pq.put((0, src))
+            while not pq.empty():
+                d, i = pq.get()
+                if seen[i]:
+                    continue
                 seen[i] = True
                 for j in range(2*n):
                     if canUse[j] and H[i][j]:
-                        v = min(path[i], H[i][j])
-                        if v > path[j]:
-                            path[j] = v
+                        w = H[i][j]
+                        if dist[j] > dist[i] + w:
+                            dist[j] = dist[i] + w
+                            path[j] = min(path[i], H[i][j])
                             From[j] = i
+                            pq.put((dist[j], j))
             if not path[snk]:
                 break
             res += path[snk]
@@ -30,7 +33,6 @@ class EdmondsKarp:
                 H[From[i]][i] -= path[snk]
                 H[i][From[i]] += path[snk]
                 i = From[i]
-
         return res
 
     def produceData(self, names, process, cost, amount, company1, company2):
