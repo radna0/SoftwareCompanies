@@ -1,8 +1,8 @@
 import time
-from edmondsKarp import EdmondsKarp
+from EdmondsKarp import EdmondsKarp
 from pushRelabel import PushRelabel
-from shortestPath import ShortestAugmentingPath
-
+from Dijkstra import Dijkstra
+from BFS import BFS
 
 testcase1 = {
     'names': ["topcoder", "doodle", "nasa", "ninny", "idm", "noname", "kintel"],
@@ -54,7 +54,7 @@ testcase6 = {
 }
 
 
-# Edmonds-Karp
+# EdmondsKarp
 if True:
     s1 = EdmondsKarp()
     start = time.time()
@@ -69,8 +69,8 @@ if True:
     end = time.time()
     print("EdmondsKarp: ", end - start)
 
-# Push-Relabel
-if True:
+# PushRelabel
+if False:
     s2 = PushRelabel()
     start = time.time()
 
@@ -86,9 +86,9 @@ if True:
     end = time.time()
     print("PushRelabel: ", end - start)
 
-# Shortest Augmenting Path
+# Dijkstra
 if True:
-    s2 = ShortestAugmentingPath()
+    s2 = Dijkstra()
     start = time.time()
 
     print(s2.produceData(**testcase1) ==
@@ -101,4 +101,21 @@ if True:
           ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
 
     end = time.time()
-    print("ShortestAugmentingPath: ", end - start)
+    print("Dijkstra: ", end - start)
+
+# BFS
+if True:
+    s2 = BFS()
+    start = time.time()
+
+    print(s2.produceData(**testcase1) ==
+          ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
+    print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
+    print(s2.produceData(**testcase3) == ["b", "ba", "d"])
+    print(s2.produceData(**testcase4) == [])
+    print(s2.produceData(**testcase5) == ["a", "b", "c"])
+    print(s2.produceData(**testcase6) ==
+          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
+
+    end = time.time()
+    print("BFS: ", end - start)

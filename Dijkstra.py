@@ -1,7 +1,7 @@
 from heapq import heappop, heappush
 
 
-class ShortestAugmentingPath:
+class Dijkstra:
     def maxFlow(self, H, src, snk, canUse, n):
         res = 0
         while True:
