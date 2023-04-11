@@ -4,33 +4,32 @@ class EdmondsKarp:
     def maxFlow(self, H, src, snk, canUse, n):
         res = 0
         while True:
-            path = [0] * 2 * n
-            From = [-1] * 2 * n
-            seen = [False] * 2 * n
-            path[src] = float("inf")
+            dist = [0] * (2*n)
+            prev = [-1] * (2*n)
+            seen = [False] * (2*n)
+            dist[src] = float("inf")
             while True:
                 i = -1
                 for j in range(2*n):
-                    if not seen[j] and path[j] and (i == -1 or path[j] > path[i]):
+                    if not seen[j] and dist[j] and (i == -1 or dist[j] > dist[i]):
                         i = j
                 if i == -1:
                     break
                 seen[i] = True
                 for j in range(2*n):
                     if canUse[j] and H[i][j]:
-                        v = min(path[i], H[i][j])
-                        if v > path[j]:
-                            path[j] = v
-                            From[j] = i
-            if not path[snk]:
+                        v = min(dist[i], H[i][j])
+                        if v > dist[j]:
+                            dist[j] = v
+                            prev[j] = i
+            if not dist[snk]:
                 break
-            res += path[snk]
+            res += dist[snk]
             i = snk
             while i != src:
-                H[From[i]][i] -= path[snk]
-                H[i][From[i]] += path[snk]
-                i = From[i]
-
+                H[prev[i]][i] -= dist[snk]
+                H[i][prev[i]] -= dist[snk]
+                i = prev[i]
         return res
 
     def produceData(self, names, process, cost, amount, company1, company2):

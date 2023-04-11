@@ -1,6 +1,7 @@
 class PushRelabel:
     def maxFlow(self, H, src, snk, canUse, n):
         height = [0] * (2*n)
+        height[src] = 2*n
         excess = [0] * (2*n)
         flow = [[0] * (2*n) for _ in range(2*n)]
         seen = [False] * (2*n)
@@ -15,7 +16,7 @@ class PushRelabel:
         def relabel(u):
             d = float("inf")
             for v in range(2*n):
-                if H[u][v] - flow[u][v] > 0:
+                if H[u][v] - flow[u][v] > 0 and canUse[v]:
                     d = min(d, height[v])
             if d < float("inf"):
                 height[u] = d + 1
@@ -27,20 +28,16 @@ class PushRelabel:
                 else:
                     seen[u] = True
                     for v in range(2*n):
-                        if canUse[v] and H[u][v] - flow[u][v] > 0 and height[u] == height[v] + 1:
+                        if H[u][v] - flow[u][v] > 0 and canUse[v] and height[u] == height[v] + 1:
                             push(u, v)
                             if excess[u] == 0:
                                 break
                     else:
                         relabel(u)
                         seen[u] = False
-
-        for v in range(2*n):
-            if canUse[v] and H[src][v]:
-                flow[src][v] = H[src][v]
-                flow[v][src] = -H[src][v]
-                excess[v] = H[src][v]
-        height[src] = 2*n
+        flow[src][src+1] = H[src][src+1]
+        flow[src+1][src] = -H[src][src+1]
+        excess[src+1] = H[src][src+1]
 
         active = [i for i in range(2*n) if excess[i]
                   > 0 and i != src and i != snk]
@@ -55,7 +52,7 @@ class PushRelabel:
             else:
                 i += 1
 
-        return sum(flow[src][i] for i in range(2*n))
+        return flow[src][src+1]
 
     def produceData(self, names, process, cost, amount, company1, company2):
         n = len(names)

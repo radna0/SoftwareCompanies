@@ -31,10 +31,10 @@ class SoftwareCompanies:
             curPath.sort()
 
             curFlow, flowDict = nx.maximum_flow(H, 2*src, 2 * snk + 1)
-            # curFlow, flowDict = nx.maximum_flow(
-            #     H, 2*src, 2 * snk + 1, flow_func=edmonds_karp)
-            # curFlow, flowDict = nx.maximum_flow(
-            #     H, 2*src, 2 * snk + 1, flow_func=shortest_augmenting_path)
+            curFlow, flowDict = nx.maximum_flow(
+                H, 2*src, 2 * snk + 1, flow_func=edmonds_karp)
+            curFlow, flowDict = nx.maximum_flow(
+                H, 2*src, 2 * snk + 1, flow_func=shortest_augmenting_path)
 
             if curFlow > bestFlow or (curFlow == bestFlow and (curCost < bestCost or (curCost == bestCost and curPath < res))):
                 bestFlow, bestCost, res = curFlow, curCost, curPath

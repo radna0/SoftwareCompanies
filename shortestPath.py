@@ -1,38 +1,42 @@
-from queue import PriorityQueue
+from heapq import heappop, heappush
 
 
 class ShortestAugmentingPath:
     def maxFlow(self, H, src, snk, canUse, n):
         res = 0
         while True:
-            path = [0] * 2 * n
-            From = [-1] * 2 * n
-            seen = [False] * 2 * n
-            dist = [float('inf')] * 2 * n
+            dist = [float("inf")] * 2 * n
             dist[src] = 0
-            pq = PriorityQueue()
-            pq.put((0, src))
-            while not pq.empty():
-                d, i = pq.get()
-                if seen[i]:
+            prev = [-1] * 2 * n
+            heap = [(0, src)]
+            while heap:
+                d, u = heappop(heap)
+                if d > dist[u]:
                     continue
-                seen[i] = True
-                for j in range(2*n):
-                    if canUse[j] and H[i][j]:
-                        w = H[i][j]
-                        if dist[j] > dist[i] + w:
-                            dist[j] = dist[i] + w
-                            path[j] = min(path[i], H[i][j])
-                            From[j] = i
-                            pq.put((dist[j], j))
-            if not path[snk]:
+                for v in range(2*n):
+                    if canUse[v] and H[u][v] and d + H[u][v] < dist[v]:
+                        dist[v] = d + H[u][v]
+                        prev[v] = u
+                        heappush(heap, (dist[v], v))
+            if dist[snk] == float("inf"):
                 break
-            res += path[snk]
-            i = snk
-            while i != src:
-                H[From[i]][i] -= path[snk]
-                H[i][From[i]] += path[snk]
-                i = From[i]
+
+            path = [snk]
+            while path[-1] != src:
+                path.append(prev[path[-1]])
+
+            path = path[::-1]
+            bottleneck = float("inf")
+
+            for i in range(len(path) - 1):
+                bottleneck = min(bottleneck, H[path[i]][path[i+1]])
+
+            for i in range(len(path) - 1):
+                H[path[i]][path[i+1]] -= bottleneck
+                H[path[i+1]][path[i]] += bottleneck
+
+            res += bottleneck
+
         return res
 
     def produceData(self, names, process, cost, amount, company1, company2):
@@ -44,7 +48,7 @@ class ShortestAugmentingPath:
         for i in range(n):
             G[2*i][2*i+1] = amount[i]
             for c in process[i].split():
-                G[2*i+1][2*ids[c]] = float("inf")
+                G[2*i+1][2*ids[c]] = amount[ids[c]]
 
         bestFlow, bestCost, res = 0, 0, []
         for mask in range(1 << n):

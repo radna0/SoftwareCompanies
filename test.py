@@ -55,7 +55,7 @@ testcase6 = {
 
 
 # Edmonds-Karp
-if False:
+if True:
     s1 = EdmondsKarp()
     start = time.time()
     print(s1.produceData(**testcase1) ==
@@ -70,18 +70,18 @@ if False:
     print("EdmondsKarp: ", end - start)
 
 # Push-Relabel
-if False:
+if True:
     s2 = PushRelabel()
     start = time.time()
 
     print(s2.produceData(**testcase1) ==
           ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
-    # print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
-    # print(s2.produceData(**testcase3) == ["b", "ba", "d"])
-    # print(s2.produceData(**testcase4) == [])
-    # print(s2.produceData(**testcase5) == ["a", "b", "c"])
-    # print(s2.produceData(**testcase6) ==
-    #       ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
+    print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
+    print(s2.produceData(**testcase3) == ["b", "ba", "d"])
+    print(s2.produceData(**testcase4) == [])
+    print(s2.produceData(**testcase5) == ["a", "b", "c"])
+    print(s2.produceData(**testcase6) ==
+          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
 
     end = time.time()
     print("PushRelabel: ", end - start)
@@ -101,4 +101,4 @@ if True:
           ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
 
     end = time.time()
-    print("PushRelabel: ", end - start)
+    print("ShortestAugmentingPath: ", end - start)
