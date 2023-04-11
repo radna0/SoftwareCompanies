@@ -1,5 +1,5 @@
 import time
-from EdmondsKarp import EdmondsKarp
+from Greedy import Greedy
 from pushRelabel import PushRelabel
 from Dijkstra import Dijkstra
 from BFS import BFS
@@ -54,9 +54,9 @@ testcase6 = {
 }
 
 
-# EdmondsKarp
+# Greedy
 if True:
-    s1 = EdmondsKarp()
+    s1 = Greedy()
     start = time.time()
     print(s1.produceData(**testcase1) ==
           ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
@@ -70,7 +70,7 @@ if True:
     print("EdmondsKarp: ", end - start)
 
 # PushRelabel
-if False:
+if True:
     s2 = PushRelabel()
     start = time.time()
 

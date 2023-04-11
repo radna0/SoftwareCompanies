@@ -1,6 +1,6 @@
 
 
-class EdmondsKarp:
+class Greedy:
     def maxFlow(self, H, src, snk, canUse, n):
         res = 0
         while True:
