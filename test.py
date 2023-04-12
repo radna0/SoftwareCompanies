@@ -1,8 +1,11 @@
 import time
+from library import SoftwareCompanies
+from networkx.algorithms.flow import shortest_augmenting_path, preflow_push, edmonds_karp
 from Greedy import Greedy
 from pushRelabel import PushRelabel
 from Dijkstra import Dijkstra
 from BFS import BFS
+from Dinic import Dinic
 
 testcase1 = {
     'names': ["topcoder", "doodle", "nasa", "ninny", "idm", "noname", "kintel"],
@@ -54,68 +57,43 @@ testcase6 = {
 }
 
 
+# Libary implmentation
+libraries = [preflow_push, edmonds_karp, shortest_augmenting_path]
+if True:
+    for library in libraries:
+        print(f"Libary {library.__name__} ")
+        l = SoftwareCompanies(library)
+
+        start = time.time()
+        print("1", l.produceData(**testcase1) ==
+              ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
+        print("2", l.produceData(**testcase2) == ["a", "b", "ba", "d"])
+        print("3", l.produceData(**testcase3) == ["b", "ba", "d"])
+        print("4", l.produceData(**testcase4) == [])
+        print("5", l.produceData(**testcase5) == ["a", "b", "c"])
+        print("6", l.produceData(**testcase6) ==
+              ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
+        end = time.time()
+
+        print("Time: ", end - start, "\n")
+
+
 # Greedy
+implementations = [Greedy, Dijkstra, BFS, Dinic, PushRelabel]
 if True:
-    s1 = Greedy()
-    start = time.time()
-    print(s1.produceData(**testcase1) ==
-          ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
-    print(s1.produceData(**testcase2) == ["a", "b", "ba", "d"])
-    print(s1.produceData(**testcase3) == ["b", "ba", "d"])
-    print(s1.produceData(**testcase4) == [])
-    print(s1.produceData(**testcase5) == ["a", "b", "c"])
-    print(s1.produceData(**testcase6) ==
-          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-    end = time.time()
-    print("EdmondsKarp: ", end - start)
+    for implementation in implementations:
+        print(implementation.__name__)
+        s = implementation()
 
-# PushRelabel
-if True:
-    s2 = PushRelabel()
-    start = time.time()
+        start = time.time()
+        print("1", s.produceData(**testcase1) ==
+              ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
+        print("2", s.produceData(**testcase2) == ["a", "b", "ba", "d"])
+        print("3", s.produceData(**testcase3) == ["b", "ba", "d"])
+        print("4", s.produceData(**testcase4) == [])
+        print("5", s.produceData(**testcase5) == ["a", "b", "c"])
+        print("6", s.produceData(**testcase6) ==
+              ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
+        end = time.time()
 
-    print(s2.produceData(**testcase1) ==
-          ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
-    print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
-    print(s2.produceData(**testcase3) == ["b", "ba", "d"])
-    print(s2.produceData(**testcase4) == [])
-    print(s2.produceData(**testcase5) == ["a", "b", "c"])
-    print(s2.produceData(**testcase6) ==
-          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-
-    end = time.time()
-    print("PushRelabel: ", end - start)
-
-# Dijkstra
-if True:
-    s2 = Dijkstra()
-    start = time.time()
-
-    print(s2.produceData(**testcase1) ==
-          ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
-    print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
-    print(s2.produceData(**testcase3) == ["b", "ba", "d"])
-    print(s2.produceData(**testcase4) == [])
-    print(s2.produceData(**testcase5) == ["a", "b", "c"])
-    print(s2.produceData(**testcase6) ==
-          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-
-    end = time.time()
-    print("Dijkstra: ", end - start)
-
-# BFS
-if True:
-    s2 = BFS()
-    start = time.time()
-
-    print(s2.produceData(**testcase1) ==
-          ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
-    print(s2.produceData(**testcase2) == ["a", "b", "ba", "d"])
-    print(s2.produceData(**testcase3) == ["b", "ba", "d"])
-    print(s2.produceData(**testcase4) == [])
-    print(s2.produceData(**testcase5) == ["a", "b", "c"])
-    print(s2.produceData(**testcase6) ==
-          ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-
-    end = time.time()
-    print("BFS: ", end - start)
+        print("Time: ", end - start, "\n")
