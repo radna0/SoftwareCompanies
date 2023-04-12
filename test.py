@@ -2,7 +2,6 @@ import time
 from library import SoftwareCompanies
 from networkx.algorithms.flow import shortest_augmenting_path, preflow_push, edmonds_karp
 from Greedy import Greedy
-from pushRelabel import PushRelabel
 from Dijkstra import Dijkstra
 from BFS import BFS
 from Dinic import Dinic
@@ -61,10 +60,9 @@ testcase6 = {
 libraries = [preflow_push, edmonds_karp, shortest_augmenting_path]
 if True:
     for library in libraries:
-        print(f"Libary {library.__name__} ")
+        print(f"networkx {library.__name__} ")
         l = SoftwareCompanies(library)
 
-        start = time.time()
         print("1", l.produceData(**testcase1) ==
               ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
         print("2", l.produceData(**testcase2) == ["a", "b", "ba", "d"])
@@ -73,19 +71,15 @@ if True:
         print("5", l.produceData(**testcase5) == ["a", "b", "c"])
         print("6", l.produceData(**testcase6) ==
               ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-        end = time.time()
+        print("\n")
 
-        print("Time: ", end - start, "\n")
-
-
-# Greedy
-implementations = [Greedy, Dijkstra, BFS, Dinic, PushRelabel]
+# Self implementation
+implementations = [Greedy, Dijkstra, BFS, Dinic]
 if True:
     for implementation in implementations:
         print(implementation.__name__)
         s = implementation()
 
-        start = time.time()
         print("1", s.produceData(**testcase1) ==
               ["doodle", "idm", "kintel", "nasa", "ninny", "topcoder"])
         print("2", s.produceData(**testcase2) == ["a", "b", "ba", "d"])
@@ -94,6 +88,5 @@ if True:
         print("5", s.produceData(**testcase5) == ["a", "b", "c"])
         print("6", s.produceData(**testcase6) ==
               ["k", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"])
-        end = time.time()
 
-        print("Time: ", end - start, "\n")
+        print("\n")
